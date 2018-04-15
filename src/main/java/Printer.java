@@ -85,7 +85,7 @@ public class Printer {
         for (int index = 0; index < numPlacesToPrint; index++) {
             System.out.print("_ ");
         }
-        System.out.println(); // prints nextLine
+        printEmptyLine();
     }
 
     public void printGame() {
@@ -97,6 +97,10 @@ public class Printer {
                 System.out.print("_ ");
             }
         }
+        printEmptyLine();
+    }
+
+    public void printEmptyLine() {
         System.out.println();
     }
 
@@ -106,7 +110,7 @@ public class Printer {
             if (userGuess != null) {
                 System.out.print(userGuess + " ");
             } else {
-                System.out.println();
+                printEmptyLine();
                 return;
             }
         }

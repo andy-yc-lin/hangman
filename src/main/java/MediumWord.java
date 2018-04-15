@@ -6,7 +6,7 @@ import java.util.Random;
 public class MediumWord {
 
     private enum MediumWordLibrary {
-        DOG("Dog"), CAT("Cat");
+        HOUSE("House"), BOOK("Book");
 
         String word;
 

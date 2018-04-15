@@ -34,6 +34,7 @@ public class Hangman {
         selectDifficulty(inputReader.getInput());
         setWordToGuess(difficulty);
         printer.print(Printer.PrintOption.DIFFICULTY_SET);
+        printer.printEmptyLine();
 
         // Hangman begins
         printer.print(Printer.PrintOption.GUESS_WORD);
@@ -80,11 +81,13 @@ public class Hangman {
             } else {
                 printer.print(Printer.PrintOption.INVALID_ENTRY_GUESS_AGAIN);
             }
+            printer.printEmptyLine();
         }
 
         // Game ends
         displayResult();
         printer.print(Printer.PrintOption.RETRY);
+        printer.printEmptyLine();
         retryOrQuit();
     }
 
