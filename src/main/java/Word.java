@@ -13,6 +13,8 @@ public class Word {
     private static final String HARD = Difficulty.HARD.toString();
 
     private EasyWord easyWord = new EasyWord();
+    private MediumWord mediumWord = new MediumWord();
+    private HardWord hardWord = new HardWord();
     private Hangman hangman;
 
     public Word(Hangman hangman) {
@@ -32,11 +34,14 @@ public class Word {
             case EASY:
                 return easyWord.getRandomWord();
             case MEDIUM:
-                break;
+                return mediumWord.getRandomWord();
             case HARD:
-                break;
+                return hardWord.getRandomWord();
+            default:
+                System.err.println("Shouldn't have reached default, exiting game");
+                System.exit(0);
+                return "";// for compiler, should never reach
         }
-        return easyWord.getRandomWord();
     }
 
     public boolean isDifficultyMatched(String userInput) {
@@ -61,9 +66,7 @@ public class Word {
     }
 
     public boolean matchesWord(String userInput) {
-        String lowercaseInput = userInput.toLowerCase();
-
-        return hangman.getWordToGuess().contains(lowercaseInput);
+        return hangman.getWordToGuess().contains(userInput);
     }
 
     public Difficulty toDifficulty(String userInput) {
@@ -79,8 +82,6 @@ public class Word {
     }
 
     public boolean validate(String inputToValidate) {
-        String lowercaseInputToValidate = inputToValidate.toLowerCase();
-
-        return lowercaseInputToValidate.matches("[a-z]+");
+        return inputToValidate.matches("[a-z]+");
     }
 }

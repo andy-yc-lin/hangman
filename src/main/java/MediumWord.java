@@ -1,16 +1,16 @@
 import java.util.Random;
 
 /**
- * Created by andyl on 4/14/2018.
+ * Created by andyl on 4/15/2018.
  */
-public class EasyWord {
+public class MediumWord {
 
-    private enum EasyWordLibrary {
+    private enum MediumWordLibrary {
         DOG("Dog"), CAT("Cat");
 
         String word;
 
-        private EasyWordLibrary(String word) {
+        private MediumWordLibrary(String word) {
             this.word = word;
         }
 
@@ -20,9 +20,9 @@ public class EasyWord {
     }
 
     public String getRandomWord() {
-        int numWords = EasyWordLibrary.values().length;
+        int numWords = MediumWordLibrary.values().length;
         int randomInt = new Random().nextInt(numWords);
 
-        return EasyWordLibrary.values()[randomInt].toString();
+        return MediumWordLibrary.values()[randomInt].toString();
     }
 }

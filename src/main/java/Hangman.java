@@ -7,8 +7,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class Hangman {
 
-    private static final AtomicBoolean isWordGuessed = new AtomicBoolean(false);
     private static final int MAX_LIVES = 5;
+    private final AtomicBoolean isWordGuessed = new AtomicBoolean(false);
     private boolean[] wordToGuessAsBooleanArray;
     private String[] userGuesses;
 
@@ -48,23 +48,34 @@ public class Hangman {
                     isWordGuessed.set(true);
                     printer.print(Printer.PrintOption.GUESSED_WHOLE_WORD);
                 } else if (word.doesWordContainLetter(userInput)) {
-                    addUserGuess(userInput);
+                    boolean wasLetterAddedToGuesses = addUserGuess(userInput);
                     updateGameInfo(userInput);
-                    printer.print(Printer.PrintOption.CORRECT_GUESS);
+                    if (wasLetterAddedToGuesses) {
+                        printer.print(Printer.PrintOption.CORRECT_GUESS);
+                    } else {
+                        printer.print(Printer.PrintOption.ALREADY_GUESSED);
+                    }
+
                     if (word.isWholeWordGuessed(wordToGuessAsBooleanArray)){
                         isWordGuessed.set(true);
                         printer.print(Printer.PrintOption.GUESSED_WHOLE_WORD);
                     } else {
                         printer.print(Printer.PrintOption.FOUND_LETTER_GUESS_AGAIN);
+                        printer.printLives(lives);
                         printer.printGuessesSoFar(userGuesses);
                         printer.printGame();
                     }
                 } else {
-                    addUserGuess(userInput);
+                    boolean shouldSubtractLife = addUserGuess(userInput);
                     printer.print(Printer.PrintOption.NO_FOUND_LETTER_GUESS_AGAIN);
+                    if (shouldSubtractLife) {
+                        lives--;
+                    } else {
+                        printer.print(Printer.PrintOption.ALREADY_GUESSED);
+                    }
+                    printer.printLives(lives);
                     printer.printGuessesSoFar(userGuesses);
                     printer.printGame();
-                    lives--;
                 }
             } else {
                 printer.print(Printer.PrintOption.INVALID_ENTRY_GUESS_AGAIN);
@@ -77,13 +88,21 @@ public class Hangman {
         retryOrQuit();
     }
 
-    private void addUserGuess(String userInput) {
+    /**
+     *
+     * @param userInput
+     * @return whether userGuess was added to list
+     */
+    private boolean addUserGuess(String userInput) {
         for(int index = 0; index < userGuesses.length; index++){
             if(userGuesses[index] == null){
                 userGuesses[index] = userInput;
-                return;
+                return true;
+            } else if (userGuesses[index].equals(userInput)){
+                return false;
             }
         }
+        return false;
     }
 
     private void displayResult() {

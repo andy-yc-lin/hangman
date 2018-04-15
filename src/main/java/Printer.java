@@ -11,6 +11,7 @@ public class Printer {
     }
 
     public enum PrintOption {
+        ALREADY_GUESSED,
         CORRECT_GUESS,
         DIFFICULTY_SET,
         FOUND_LETTER_GUESS_AGAIN,
@@ -41,11 +42,14 @@ public class Printer {
             case GUESS_WORD:
                 System.out.println("Enter a letter or word to start guessing");
                 break;
+            case ALREADY_GUESSED:
+                System.out.print("You already guessed this letter. ");
+                break;
             case FOUND_LETTER_GUESS_AGAIN:
                 System.out.println("Enter another letter to keep guessing.");
                 break;
             case NO_FOUND_LETTER_GUESS_AGAIN:
-                System.out.println("Wrong guess! Please enter a letter or word to guess again");
+                System.out.println("No matching letter! Try guessing again.");
                 break;
             case GUESSED_WHOLE_WORD:
                 System.out.println("Wow you guessed the whole word!");
@@ -106,5 +110,9 @@ public class Printer {
                 return;
             }
         }
+    }
+
+    public void printLives(int lives) {
+        System.out.print("You have " + lives + " lives left. ");
     }
 }
